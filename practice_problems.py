@@ -12,10 +12,15 @@ Input: [1, 2, 3, 4, 5]
 Output: False
 """
 
-def has_duplicates(product_ids):
-    # Your implementation here
-    pass
+testLst1 = [10, 20, 30, 20, 40]
+testLst2 = [1, 2, 3, 4, 5]
 
+def has_duplicates(product_ids):
+    temp_set = set(product_ids)
+    if len(temp_set) < len(product_ids):
+        return True
+    else:
+        return False
 
 """
 Problem 2: Order Manager
@@ -32,8 +37,8 @@ task_queue.remove_oldest_task() → "Email follow-up"
 
 class TaskQueue:
     def __init__(self):
-        # Your initialization here
-        pass
+        self.front = None
+        self.rear = None
 
     def add_task(self, task):
         pass
@@ -64,3 +69,6 @@ class UniqueTracker:
 
     def get_unique_count(self):
         pass
+
+print(has_duplicates(testLst1))
+print(has_duplicates(testLst2))
