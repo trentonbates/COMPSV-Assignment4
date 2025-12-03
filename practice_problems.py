@@ -17,10 +17,12 @@ testLst2 = [1, 2, 3, 4, 5]
 
 def has_duplicates(product_ids):
     temp_set = set(product_ids)
+
     if len(temp_set) < len(product_ids):
         return True
     else:
         return False
+
 
 """
 Problem 2: Order Manager
@@ -35,16 +37,35 @@ task_queue.add_task("Code review")
 task_queue.remove_oldest_task() → "Email follow-up"
 """
 
+class TaskNode:
+    def __init__(self, task):
+        self.task = task
+        self.next = None
+
 class TaskQueue:
     def __init__(self):
         self.front = None
         self.rear = None
 
     def add_task(self, task):
-        pass
+        new_task = TaskNode(task)
+        if not self.front:
+            self.front = new_task
+            self.rear = new_task
+        else:
+            self.rear.next = new_task
+            self.rear = new_task
 
     def remove_oldest_task(self):
-        pass
+        if not self.front:
+            return None
+        removed_task = self.front
+        self.front = self.front.next
+
+        if not self.front:
+            self.rear = None
+        
+        return removed_task.task
 
 
 """
@@ -62,13 +83,29 @@ tracker.get_unique_count() → 2
 
 class UniqueTracker:
     def __init__(self):
-        pass
+        self.values = set()
 
     def add(self, value):
-        pass
+        self.values.add(value)
 
     def get_unique_count(self):
-        pass
+        return len(self.values)
 
-print(has_duplicates(testLst1))
-print(has_duplicates(testLst2))
+
+# Problem 1 Test Cases
+assert has_duplicates(testLst1) == True
+assert has_duplicates(testLst2) == False
+
+# Problem 2 Test Case
+task_queue = TaskQueue()
+task_queue.add_task("Email follow-up")
+task_queue.add_task("Code review")
+assert task_queue.remove_oldest_task() == "Email follow-up"
+assert task_queue.front.task == "Code review"
+
+# Problem 3 Test Case
+tracker = UniqueTracker()
+tracker.add(10)
+tracker.add(20)
+tracker.add(10)
+assert tracker.get_unique_count() == 2
